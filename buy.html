@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Shop — UltraVGamer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  background: #04060c;
+  color: #eaf2ff;
+  font-family: system-ui;
+  padding: 40px;
+}
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #3ea6ff;
+}
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.card {
+  background: #111;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+}
+.card strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #3ea6ff;
+}
+.card button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #3ea6ff;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.card button:hover {
+  background: #7cc4ff;
+}
+.cart {
+  max-width: 400px;
+  margin: 30px auto;
+  background: #111;
+  padding: 20px;
+  border-radius: 12px;
+}
+.cart h2 {
+  margin-bottom: 10px;
+  color: #3ea6ff;
+}
+.cart-items {
+  margin-bottom: 10px;
+}
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.cart-total {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.pay-button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #3ea6ff;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.pay-button:hover {
+  background: #7cc4ff;
+}
+</style>
+</head>
+<body>
+
+<h1>UltraVGamer.store</h1>
+
+<div class="shop-grid" id="shop">
+  <!-- Cards inserted by JS -->
+</div>
+
+<div class="cart" id="cart">
+  <h2>Cart</h2>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="cart-total" id="cart-total">Total: $0.00</div>
+  <button class="pay-button" id="checkout">Checkout</button>
+</div>
+
+<script>
+// List of items
+const items = [
+  {name: "Script <500 chars", price: 2.40},
+  {name: "Script <2000 chars", price: 5.20},
+  {name: "Script <10000 chars", price: 12.15},
+  {name: "Executor 3 Months", price: 4.00},
+  {name: "Executor 12 Months", price: 8.40},
+  {name: "Executor Lifetime", price: 14.50},
+];
+
+const shop = document.getElementById("shop");
+const cartItemsEl = document.getElementById("cart-items");
+const cartTotalEl = document.getElementById("cart-total");
+const checkoutBtn = document.getElementById("checkout");
+
+let cart = [];
+
+// Render shop
+items.forEach((item, i)=>{
+  const card = document.createElement("div");
+  card.classList.add("card");
+  card.innerHTML = `<strong>${item.name}</strong><p>$${item.price.toFixed(2)}</p><button>Add to Cart</button>`;
+  card.querySelector("button").addEventListener("click", ()=>{
+    addToCart(i);
+  });
+  shop.appendChild(card);
+});
+
+// Add to cart
+function addToCart(index){
+  cart.push(items[index]);
+  renderCart();
+}
+
+// Remove from cart
+function removeFromCart(index){
+  cart.splice(index, 1);
+  renderCart();
+}
+
+// Render cart
+function renderCart(){
+  cartItemsEl.innerHTML = "";
+  cart.forEach((item,i)=>{
+    const div = document.createElement("div");
+    div.classList.add("cart-item");
+    div.innerHTML = `<span>${item.name}</span> <span>$${item.price.toFixed(2)}</span> <button onclick="removeFromCart(${i})">X</button>`;
+    cartItemsEl.appendChild(div);
+  });
+  const total = cart.reduce((sum,item)=>sum+item.price,0);
+  cartTotalEl.textContent = "Total: $" + total.toFixed(2);
+}
+
+// Checkout (placeholder)
+checkoutBtn.addEventListener("click", ()=>{
+  if(cart.length===0){ alert("Cart is empty!"); return; }
+  // save cart to localStorage and go to checkout page
+  localStorage.setItem('cart', JSON.stringify(cart));
+  window.location.href = 'checkout.html';
+});
+
+</script>
+</body>
+</html>

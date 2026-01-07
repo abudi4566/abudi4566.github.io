@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Order Complete — UltraVGamer</title>
+<style>
+  body{background:#04060c;color:#eaf2ff;font-family:system-ui;padding:32px}
+  .box{max-width:760px;margin:0 auto;background:#0b0b0f;padding:24px;border-radius:12px}
+  h1{color:#3ea6ff}
+  .code{font-family:monospace;background:#111;padding:12px;border-radius:8px;display:inline-block}
+  .note{margin-top:12px}
+  .small{opacity:.9}
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>Thank you — payment received</h1>
+  <p>Your purchase was successful. Your one-time redemption code is:</p>
+  <div id="code" class="code">...</div>
+  <div id="order-summary" style="margin-top:12px"></div>
+  <p class="note">Copy this code and send it to Discord: <b>Ultravgamer90</b> or email: <b>ultra@ultravgamer.site</b> to receive your purchase.</p>
+  <p class="note">Please screenshot this page and send the screenshot along with the code to Discord: <b>Ultravgamer90</b> or email: <b>ultra@ultravgamer.site</b>.</p>
+  <p class="small">If you lose the code, contact support with your payment details.</p>
+  <p style="margin-top:18px"><a href="buy.html">Back to shop</a></p>
+</div>
+<script>
+// Show generated code from localStorage or create one if missing
+function genCode(len=15){
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789';
+  let s=''; for(let i=0;i<len;i++) s += chars[Math.floor(Math.random()*chars.length)];
+  return s;
+}
+let code = localStorage.getItem('last_purchase_code');
+if(!code){ code = genCode(15); localStorage.setItem('last_purchase_code', code); }
+document.getElementById('code').textContent = code;
+
+// Show order summary if available
+try{
+  const orderText = localStorage.getItem('last_purchase_order');
+  if(orderText){
+    const order = JSON.parse(orderText);
+    const summary = document.getElementById('order-summary');
+    const items = order.items || [];
+    let html = `<div class="small"><b>Items Purchased:</b></div><ul class="small">`;
+    items.forEach(it=>{ html += `<li>${(it.name||'Item')} — $${(it.price||0).toFixed?it.price.toFixed(2):Number(it.price||0).toFixed(2)}</li>`; });
+    html += `</ul><div class="small"><b>Total paid:</b> $${(order.total?order.total:0)}</div>`;
+    summary.innerHTML = html;
+  }
+}catch(e){ console.error('Could not read order summary', e); }
+</script>
+</body>
+</html>

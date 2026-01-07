@@ -2,163 +2,325 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>UltraVGamer — Roblox Scripts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UltraVGamer</title>
+
 <style>
-  /* Reset and base */
-  * { margin:0; padding:0; box-sizing:border-box; font-family: 'Orbitron', sans-serif; }
-  body { background:#0b0b0b; color:#fff; line-height:1.5; overflow-x:hidden; }
-  a { text-decoration:none; color:inherit; }
+:root{
+  --bg:#04060c;
+  --card:rgba(255,255,255,.06);
+  --blue:#3ea6ff;
+  --blueSoft:#7cc4ff;
+  --text:#eaf2ff;
+}
 
-  /* Google Fonts */
-  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
 
-  /* Containers & Sections */
-  .container { max-width:1100px; margin:0 auto; padding:40px 20px; }
-  section { margin-bottom:60px; padding:40px 20px; border-radius:10px; opacity:0; transform:translateY(30px); transition: all 0.8s ease; }
+body{
+  font-family:system-ui,-apple-system,Segoe UI,sans-serif;
+  background:
+    radial-gradient(circle at 20% 10%,#0b1a33,transparent 45%),
+    radial-gradient(circle at 80% 30%,#081226,transparent 45%),
+    var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+}
 
-  /* Headings */
-  h1 { text-align:center; font-size:3rem; color:#0ff; font-weight:700; margin-bottom:15px; }
-  h2 { font-size:2rem; color:#0ff; font-weight:700; text-align:center; margin-bottom:25px; border-bottom:2px solid #0ff; display:inline-block; padding-bottom:5px; }
+/* TOP BAR */
+nav{
+  position:fixed;
+  top:0;
+  width:100%;
+  height:70px;
+  display:flex;
+  align-items:center;
+  padding:0 8%;
+  background:rgba(4,6,12,.7);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.05);
+  z-index:1000;
+}
 
-  /* Paragraphs */
-  p { text-align:center; font-weight:500; margin-bottom:15px; }
+nav span{
+  font-size:1.4rem;
+  font-weight:700;
+  color:var(--blue);
+  letter-spacing:1px;
+}
 
-  /* Buttons */
-  .btn { display:inline-block; margin:10px auto; padding:12px 30px; font-size:1rem; cursor:pointer; background:none; border:2px solid #0ff; color:#0ff; border-radius:6px; position:relative; overflow:hidden; transition:0.3s; font-weight:700; }
-  .btn:hover { background:#0ff; color:#0b0b0b; }
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:grid;
+  place-content:center;
+  text-align:center;
+  padding-top:70px;
+}
 
-  /* Cards and Grids */
-  .grid { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
-  .card { flex:1 1 250px; padding:20px; border:1px solid #00f; border-radius:6px; text-align:center; background:#111; transition:0.3s; font-weight:600; }
-  .card:hover { transform:scale(1.05); border-color:#0ff; }
-  .card img { width:100%; height:auto; display:block; border-radius:6px; margin-bottom:10px; }
+.hero h1{
+  font-size:clamp(3.5rem,10vw,6rem);
+  color:var(--blue);
+  animation:float 6s ease-in-out infinite;
+}
 
-  /* Stats Numbers */
-  .stat-number { font-size:2rem; font-weight:700; color:#0ff; }
+.hero p{
+  opacity:.7;
+  margin-top:12px;
+}
 
-  /* Footer */
-  footer { text-align:center; padding:20px; background:#111; border-top:2px solid #0ff; }
-  footer a { color:#0ff; text-decoration:underline; }
+.hero a{
+  display:inline-block;
+  margin-top:35px;
+  padding:14px 36px;
+  border-radius:40px;
+  background:linear-gradient(135deg,var(--blue),var(--blueSoft));
+  color:#000;
+  text-decoration:none;
+  font-weight:600;
+  transition:.3s;
+}
 
-  /* Testimonial Images */
-  .testimonial img { border-radius:50%; width:60px; height:60px; margin-bottom:10px; display:block; margin-left:auto; margin-right:auto; }
+.hero a:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 40px rgba(62,166,255,.35);
+}
 
-  /* Scroll in animation class */
-  .scroll-visible { opacity:1 !important; transform:translateY(0) !important; }
+/* SECTIONS */
+section{
+  padding:120px 12%;
+}
+
+h2{
+  font-size:2.6rem;
+  color:var(--blue);
+  margin-bottom:18px;
+}
+
+p{
+  max-width:720px;
+  opacity:.85;
+  line-height:1.6;
+}
+
+/* CARDS */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:30px;
+  margin-top:50px;
+}
+
+.card{
+  background:var(--card);
+  backdrop-filter:blur(18px);
+  display:block;
+  border-radius:20px;
+  padding:40px;
+  border:1px solid rgba(255,255,255,.05);
+  transition:.4s;
+}
+
+.card:hover{
+  transform:translateY(-12px);
+  box-shadow:0 25px 50px rgba(0,0,0,.5);
+}
+
+.card strong{
+  font-size:2rem;
+  color:var(--blue);
+}
+
+/* Promo card: span two columns in the pricing grid */
+#pricing .card.promo{
+  grid-column: span 2;
+}
+
+/* STATS */
+.stats{
+  display:flex;
+  justify-content:space-around;
+  text-align:center;
+  margin-top:60px;
+}
+
+.stat span{
+  font-size:3.5rem;
+  display:block;
+  color:var(--blue);
+}
+
+/* REVIEWS */
+.review{
+  background:var(--card);
+  padding:30px;
+  border-radius:16px;
+  margin-top:24px;
+  border:1px solid rgba(255,255,255,.05);
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:80px;
+  opacity:.6;
+}
+
+/* SCROLL REVEAL */
+.reveal{
+  opacity:0;
+  transform:translateY(60px);
+  transition:1s ease;
+}
+.reveal.show{
+  opacity:1;
+  transform:none;
+}
+
+/* CURSOR — CLEAN BLUE RING */
+#cursor{
+  position:fixed;
+  width:32px;
+  height:32px;
+  border:2px solid rgba(62,166,255,.6);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9999;
+  transform:translate(-50%,-50%);
+}
+
+#cursorGlow{
+  position:fixed;
+  width:120px;
+  height:120px;
+  background:radial-gradient(circle,rgba(62,166,255,.25),transparent 60%);
+  border-radius:50%;
+  filter:blur(25px);
+  pointer-events:none;
+  z-index:9998;
+  transform:translate(-50%,-50%);
+}
+
+/* ANIMATION */
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-14px)}
+}
 </style>
 </head>
+
 <body>
 
-<!-- Hero -->
-<section class="hero container">
-  <h1>UltraVGamer</h1>
-  <p>Roblox Scripts</p>
-  <button class="btn hire-btn">DM UltraVGamer90 on discord</button>
-  <button class="btn"><a href="mailto:ultra@ultravgamer.site">DM Email</a></button>
-  <button class="btn"><a href="https://discord.gg/MkSqbwdPGq" target="_blank">Discord</a></button>
+<nav>
+  <span>ULTRAVGAMER</span>
+</nav>
+
+<div id="cursor"></div>
+<div id="cursorGlow"></div>
+
+<section class="hero">
+  <div>
+    <h1>UltraVGamer</h1>
+    <p>Custom Roblox Scripts, Roblox Executors and more.</p>
+<div class="hero-buttons">
+  <a href="buy.html" class="btn primary">Buy</a>
+  <a href="#pricing" class="btn">View Pricing</a>
+
+</div>
+
+
+
+<section class="reveal">
+  <h2>About ULTRAEXECUTOR</h2>
+  <p>
+    ULTRAEXECUTOR is an executor that executes Roblox scripts with high performance and reliability.
 </section>
 
-<!-- About -->
-<section id="about" class="container">
-  <h2>About me</h2>
-  <p>I'm a Game Developer. I can code in HTML5, Lua and Python.</p>
-</section>
-
-<!-- Pricing -->
-<section id="pricing" class="container">
+<section id="pricing" class="reveal">
   <h2>Pricing</h2>
-  <div class="grid">
-    <div class="card"><h3>$2</h3><p>Working script &lt;500 characters</p></div>
-    <div class="card"><h3>$20</h3><p>Script &lt;2000 characters</p></div>
-    <div class="card"><h3>$50</h3><p>Script &lt;10000 characters</p></div>
+  <div class="cards">
+    <a href="buy.html" class="card code-card"><strong>$2.40</strong><p>Working script &lt; 500 characters</p></a>
+    <a href="buy.html" class="card code-card"><strong>$5.20</strong><p>Script &lt; 2000 characters</p></a>
+    <a href="buy.html" class="card code-card"><strong>$12.15</strong><p>Script &lt; 10000 characters</p></a>
+    <a href="buy.html" class="card"><strong>$4</strong><p>Executor &lt; ULTRA EXECUTOR - 3 Months</p></a>
+    <a href="buy.html" class="card"><strong>$8.40</strong><p>Executor &lt; ULTRA EXECUTOR - 12 Months</p></a>
+    <a href="buy.html" class="card"><strong>$14.50</strong><p>Executor &lt; ULTRA EXECUTOR - LIFETIME</p></a>
+    <a href="buy.html" class="card promo"><strong>USE CODE ULTRA50 FOR 50% OFF</strong><p>LIMITED TIME ONLY</p></a>
   </div>
 </section>
 
-<!-- Stats -->
-<section class="stats container">
+
+
+
+<section class="reveal">
   <h2>Satisfied customers & Projects</h2>
-  <div class="grid">
-    <div class="card"><p class="stat-number" data-target="6">0</p><p>Satisfied Customers</p></div>
-    <div class="card"><p class="stat-number" data-target="6">0</p><p>Completed Projects</p></div>
-    <div class="card"><p class="stat-number" data-target="8">0</p><p>Items Sold</p></div>
+  <div class="stats">
+    <div class="stat"><span data-num="38">0</span>Satisfied Customers</div>
+    <div class="stat"><span data-num="43">0</span>Completed Projects</div>
+    <div class="stat"><span data-num="56">0</span>Items Sold</div>
   </div>
 </section>
 
-<!-- Why Me -->
-<section class="why-me container">
-  <h2>Why me?</h2>
-  <p>I'll complete the scripts and deliver the templates quickly! If it takes me longer than 3 hours you get refunded.</p>
-  <img src="https://i.imgur.com/bVifKMh.png" alt="Image" style="display:block; margin:20px auto; max-width:100%; border-radius:6px;">
-</section>
-
-<!-- How I Work -->
-<section class="how-work container">
-  <h2>How do I work?</h2>
-  <p>I provide advanced code and game templates for Game Developers, and offer dedicated support via my Discord community for any questions or suggestions.</p>
-  <p><a href="https://discord.gg/MkSqbwdPGq" target="_blank">Join Discord</a></p>
-</section>
-
-<!-- Testimonials -->
-<section class="testimonials container">
+<section class="reveal">
   <h2>What customers say?</h2>
-  <div class="grid">
-    <div class="card testimonial">
-      <img src="hhttps://i.imgur.com/pzsqIBX" alt="Thomas">
-      <h3>Thomas - Rated 6.9/10</h3>
-      <p>Sent me in 5 mins, lil bro prob used a premade script but it's fire. So it's good.</p>
-    </div>
-    <div class="card testimonial">
-      <img src="https://i.imgur.com/8wC04Ji" alt="Zermify">
-      <h3>Zermify - Rated 10/10</h3>
-      <p>Yo bro it took 20 minutes but it works, it helped my game Jump into Kreekcraft I got like 2k players.</p>
-    </div>
-    <div class="card testimonial">
-      <img src="https://i.imgur.com/hK4H7LN.png" alt="Mike Hawk">
-      <h3>Mike Hawk - Rated 6.7/10</h3>
-      <p>Yo ts a W but $50 is kinda too much for this, make it cheaper man.</p>
-    </div>
+
+  <div class="review">
+    <b>Thomas — 6.9/10</b>
+    <p>Sent me in 5 mins, lil bro prob used a premade script but it's fire.</p>
+  </div>
+
+  <div class="review">
+    <b>Zermify — 10/10</b>
+    <p>been using the executor for 3 months now, works perfectly</p>
+  </div>
+
+  <div class="review">
+    <b>Mike Hawk — 6.7/10</b>
+    <p>Yo ts a W but $4 is kinda too much.</p>
   </div>
 </section>
 
-<!-- Footer -->
 <footer>
-  <p>Email: <a href="mailto:ultra@ultravgamer.site">ultra@ultravgamer.site</a></p>
+  <p>Email: ultra@ultravgamer.site</p>
   <p>Discord: ultravgamer90</p>
 </footer>
 
-<script src="script.js"></script>
 <script>
-  // Scroll animation for sections
-  const sections = document.querySelectorAll('section');
-  const observer = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        entry.target.classList.add('scroll-visible');
-      }
-    });
-  }, {threshold:0.1});
-  sections.forEach(section=>observer.observe(section));
+/* Reveal */
+const obs=new IntersectionObserver(e=>{
+  e.forEach(x=>{if(x.isIntersecting)x.target.classList.add("show")})
+},{threshold:.15})
+document.querySelectorAll(".reveal").forEach(el=>obs.observe(el))
 
-  // Stats counter animation
-  const counters = document.querySelectorAll('.stat-number');
-  const counterObserver = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        const el = entry.target;
-        const target = +el.getAttribute('data-target');
-        let count = 0;
-        const step = Math.ceil(target/100);
-        const interval = setInterval(()=>{
-          count += step;
-          if(count >= target){ el.textContent = target; clearInterval(interval);}
-          else el.textContent = count;
-        },20);
-        counterObserver.unobserve(el);
-      }
-    });
-  }, {threshold:0.5});
-  counters.forEach(counter=>counterObserver.observe(counter));
+/* Counters */
+document.querySelectorAll("[data-num]").forEach(el=>{
+  let t=+el.dataset.num,n=0
+  let i=setInterval(()=>{
+    n++;el.textContent=n
+    if(n>=t)clearInterval(i)
+  },60)
+})
+
+/* Cursor */
+const c=document.getElementById("cursor")
+const g=document.getElementById("cursorGlow")
+let x=0,y=0,gx=0,gy=0
+
+window.addEventListener("mousemove",e=>{
+  x=e.clientX;y=e.clientY
+  c.style.left=x+"px"
+  c.style.top=y+"px"
+})
+
+function loop(){
+  gx+=(x-gx)*0.12
+  gy+=(y-gy)*0.12
+  g.style.left=gx+"px"
+  g.style.top=gy+"px"
+  requestAnimationFrame(loop)
+}
+loop()
 </script>
+
 </body>
 </html>
